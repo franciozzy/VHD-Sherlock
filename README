@@ -1,0 +1,64 @@
+VHD Sherlock
+------------
+ Analyse VHD image files
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+ Description:
+  This program is useful to analyse the structure of a VHD file.
+  It currently supports Fixed Hard Disk, Dynamic Hard Disk and
+  Differencing Hard Disk images.
+
+  It follows Microsoft VHD Image Format Specification, available
+  on the Microsoft website.
+
+ Compile:
+  gcc -o sherlock sherlock.c -Wall -O3 -s
+
+ Usage:
+  ./sherlock [ -h ] [ -v[v] ] <file>
+      -h      Print this help message and quit
+      -v      Increase verbose level (may be used multiple times)
+      -c      Read VHD footer *copy* only (for corrupted VHDs with no footer)
+      <file>  VHD file to examine
+
+  If no -v option is specified, sherlock will run and return 0
+  without any output, unless the VHD file is detected to be
+  corrupted.
+  Using -v cause it to print what is being checked.
+  Using -vv cause it to print the headers analysed as well.
+  Using -vvv cause it to print the bat and bitmaps as well.
+
+ CHANGELOG:
+   2011.10.27 - Felipe Franciosi
+    - Program creation.
+    - Basic dump of VHD Footer Copy and VHD Dynamic Disk Header.
+ 
+   2011.10.28 - Felipe Franciosi
+    - Improved output of some fields.
+ 
+   2011.10.31 - Felipe Franciosi
+    - Reads footer first, then everything else accordingly.
+ 
+   2011.11.07 - Felipe Franciosi
+    - Added option to read footer copy exclusively.
+ 
+   2011.11.17 - Felipe Franciosi
+    - Now every header has its cookie properly checked.
+ 
+  TODO:
+   - Validate checksums
+   - Validate the consistency of the VHD (i.e. compare footers)
+   - Analyse a VHD chain
+
