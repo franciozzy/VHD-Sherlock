@@ -586,7 +586,7 @@ dyndisk:
 				printf(" block[%d] = <...not allocated...>\n", i);
 				continue;
 			}
-			if (lseek(vhdfd, be32toh(batmap[i])*MT_SECS, SEEK_SET) < 0){
+			if (lseek(vhdfd, be32toh(batmap[i]) * (off_t)MT_SECS, SEEK_SET) < 0){
 				perror("lseek");
 				fprintf(stderr, "Error repositioning VHD descriptor to batmap[%d] at 0x%016X\n", i, be32toh(batmap[i]));
 				free(batmap);
