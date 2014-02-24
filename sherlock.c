@@ -319,6 +319,7 @@ int main(int argc, char **argv){
 	int		verbose = 0;		// Verbose level
 	int		i, j;			// Temporary integers
 	ssize_t		bytesread;		// Bytes read in a read operation
+	off_t		offset;
 
 	// Fetch arguments
 	while ((i = getopt(argc, argv, "hvc")) != -1){
@@ -398,8 +399,8 @@ int main(int argc, char **argv){
 		}
 
 		// little hack to get around a SEEK_SET problem
-		bytesread = lseek(vhdfd, -sizeof(vhd_footer), SEEK_END);
-		if (lseek(vhdfd, bytesread, SEEK_SET) < 0){
+		offset = lseek(vhdfd, -((off_t)sizeof(vhd_footer)), SEEK_END);
+		if (lseek(vhdfd, offset, SEEK_SET) < 0){
 			perror("lseek");
 			fprintf(stderr, "Corrupt disk detected whilst reading VHD footer.\n");
 			fprintf(stderr, "Error repositioning VHD descriptor to the footer.\n");
